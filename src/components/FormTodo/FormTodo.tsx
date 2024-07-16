@@ -1,16 +1,20 @@
-import React, {useState, FormEvent } from 'react';
+import React, {FormEvent, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {AppDispatch}  from '../../app/store';
+import {AppDispatch} from '../../app/store';
+import {AddNewTask} from '../../containers/todoThunks';
 
 const FormTodo: React.FC = () => {
   const [title, setTitle] = useState('');
+  const dispatch: AppDispatch = useDispatch();
 
   const changeForm = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle (event.target.value)}
+    setTitle(event.target.value);
+  };
 
   const submitForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-      setTitle('');
+    await dispatch(AddNewTask(title));
+    setTitle('');
   };
 
   return (

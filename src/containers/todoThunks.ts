@@ -1,4 +1,4 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
+import {createAsyncThunk} from '@reduxjs/toolkit';
 import {Task} from './tasksSlice';
 import axiosApi from '../axiosApi';
 import {RootState} from '../app/store';
@@ -17,17 +17,17 @@ export const fetchTasks:unknown = createAsyncThunk<Task[], void, {state: RootSta
   }
 );
 
-export const AddNewTask:unknown = createAsyncThunk<Task, string, {state: RootState}>(
+export const AddNewTask:unknown = createAsyncThunk<Task, string>(
   'tasks/add',
   async (title) => {
     const newTodo = {title, completed: false};
-    const {data} = await axiosApi.post<{name: string}>('/tasks.json', newTodo);
+    const {data} = await axiosApi.post<{ name: string }>('/tasks.json', newTodo);
     toast.success('Task added');
     return {...newTodo, id: data.name};
   }
 );
 
-export const EditTask:unknown = createAsyncThunk<Task, Task, {state: RootState}>(
+export const EditTask: unknown = createAsyncThunk<Task, Task, {state: RootState}>(
   'tasks/edit',
   async (task) => {
     await axiosApi.put(`/tasks/${task.id}.json`, task);
@@ -35,7 +35,7 @@ export const EditTask:unknown = createAsyncThunk<Task, Task, {state: RootState}>
     return task;
   }
 );
-export const DeleteTask:unknown = createAsyncThunk<string, string, {state: RootState}>(
+export const DeleteTask: unknown = createAsyncThunk<string, string, {state: RootState}>(
   'tasks/delete',
   async (id) => {
     if (window.confirm('Are you sure you want to delete this meal?')) {
